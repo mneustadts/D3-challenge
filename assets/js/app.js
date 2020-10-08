@@ -14,7 +14,7 @@ var chartMargin = {
 var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
 var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
 
-// Select body, append SVG area to it, and set the dimensions
+// Select scatter, append SVG area to it, and set the dimensions
 var svg = d3
   .select("#scatter")
   .append("svg")
