@@ -34,5 +34,11 @@ d3.csv("assets/data/data.csv").then(function(stateData) {
         data.age = +data.age;
     })
 });
+// Scales for axis
+var xScale = d3.scaleLinear()
+    .domain([0,50])
+    .range([0,1000]);
 
-var 
+var yScale = d3.scaleLinear()
+    .domain([0,50])
+    .range([0,1000]);
