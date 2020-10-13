@@ -29,5 +29,10 @@ var chartGroup = svg.append("g")
 // Load data from csv file
 d3.csv("assets/data/data.csv").then(function(stateData) {
     console.log(stateData);
-
+// Cast th age value to a number for each piece of stateData
+    stateData.forEach(function(data){
+        data.age = +data.age;
+    })
 });
+
+var 
