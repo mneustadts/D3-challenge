@@ -6,7 +6,7 @@ var svgHeight = 660;
 var chartMargin = {
   top: 50,
   right: 50,
-  bottom: 50,
+  bottom: 100,
   left: 50
 };
 
@@ -69,7 +69,7 @@ chartGroup.append("g")
    .attr("r", "10")
    .style("fill", "#69b3a2")
 
-
+// Add texts for datapoints
    chartGroup.append("g")
    .selectAll('text')
    .data(stateData)
@@ -86,9 +86,9 @@ chartGroup.append("g")
    .style("font-weight", "bold")
    .attr("alignment-baseline", "central");
 
-
+// Add axis titles
    chartGroup.append("text")
-   .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 13})`)
+   .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 3})`)
    .attr("text-anchor", "middle")
    .attr("font-size", "16px")
    .attr("fill", "black")
