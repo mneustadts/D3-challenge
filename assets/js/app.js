@@ -39,13 +39,13 @@ d3.csv("assets/data/data.csv").then(function(stateData) {
 // Scales for axis
 var xScale = d3.scaleLinear()
 .domain(d3.extent(stateData, d => d.age))
-.range([0, chartWidth]);
-//.nice();
+.range([0, chartWidth])
+.nice();
 
 var yScale = d3.scaleLinear()
 .domain([6,d3.max(stateData, d => d.smokes)])
-.range([chartHeight, 0]);
-//.nice();
+.range([chartHeight, 0])
+.nice();
 
 // Axis variables
 var yAxis = d3.axisLeft(yScale);
