@@ -33,8 +33,7 @@ d3.csv("assets/data/data.csv").then(function(stateData) {
 // Cast the age value to a number for each piece of stateData
     stateData.forEach(function(data){
         data.age = +data.age;
-    })
-});
+    });
 
 // Scales for axis
 var xScale = d3.scaleLinear()
@@ -62,7 +61,11 @@ chartGroup.append("g")
  .data(stateData)
  .enter()
  .append("circle")
-   .attr("cx", function (d) { return x(d.age); } )
-   .attr("cy", function (d) { return y(d.smokes); } )
+   .attr("cx", function (d) { return xAxis(d.age); } )
+   .attr("cy", function (d) { return yAxis(d.smokes); } )
    .attr("r", 1.5)
-   .style("fill", "#69b3a2");
+   .style("fill", "#69b3a2")
+}).catch(function(error) {
+    console.log(error);
+  });
+  
