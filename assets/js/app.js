@@ -29,16 +29,41 @@ var chartGroup = svg.append("g")
 // Load data from csv file
 d3.csv("assets/data/data.csv").then(function(stateData) {
     console.log(stateData);
+
 // Cast th age value to a number for each piece of stateData
     stateData.forEach(function(data){
         data.age = +data.age;
     })
 });
+
 // Scales for axis
 var xScale = d3.scaleLinear()
     .domain([0,50])
     .range([0,svgWidth]);
 
 var yScale = d3.scaleLinear()
-    .domain([0,50])
-    .range([0,svgHeight]);
+    .domain([0, 50])
+    .range([svgHeight,0]);
+
+// Axis variables
+var yAxis = d3.axisLeft(yScale);
+var xAxis = d3.axisBottom(xScale);
+
+// Set x to the bottom of the chart set y to y axis
+chartGroup.append("g")
+  .attr("transform", `translate(0, ${chartHeight})`)
+  .call(xAxis);
+
+chartGroup.append("g")
+  .call(yAxis);
+
+ // Add dots
+ svg.append('g')
+ .selectAll("#scatter")
+ .data(stateData)
+ .enter()
+ .append("circle")
+   .attr("cx", function (d) { return x(d.age); } )
+   .attr("cy", function (d) { return y(d.smokes); } )
+   .attr("r", 1.5)
+   .style("fill", "#69b3a2");
