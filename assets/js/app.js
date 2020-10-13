@@ -28,7 +28,7 @@ var chartGroup = svg.append("g")
 
 // Load data from csv file
 d3.csv("assets/data/data.csv").then(function(stateData) {
-    console.log(stateData);
+    //console.log(stateData);
 
 // Cast the age value to a number for each piece of stateData
     stateData.forEach(function(data){
@@ -38,12 +38,14 @@ d3.csv("assets/data/data.csv").then(function(stateData) {
 
 // Scales for axis
 var xScale = d3.scaleLinear()
-    .domain([0,50])
-    .range([0,svgWidth]);
+.domain(d3.extent(stateData, d => d.age))
+.range([0, chartWidth]);
+//.nice();
 
 var yScale = d3.scaleLinear()
-    .domain([0, 50])
-    .range([svgHeight,0]);
+.domain([6,d3.max(stateData, d => d.smokes)])
+.range([chartHeight, 0]);
+//.nice();
 
 // Axis variables
 var yAxis = d3.axisLeft(yScale);
@@ -58,16 +60,50 @@ chartGroup.append("g")
   .call(yAxis);
 
  // Add plots
- chartGroup.selectAll("#scatter")
+ chartGroup.selectAll("circle")
  .data(stateData)
  .enter()
  .append("circle")
-   .attr("cx", function (d) { return xAxis(d.age); } )
-   .attr("cy", function (d) { return yAxis(d.smokes); } )
-   .attr("r", 1.5)
+   .attr("cx", d=>xScale(d.age))
+   .attr("cy", d=>yScale(d.smokes))
+   .attr("r", "10")
    .style("fill", "#69b3a2")
-    })
-    .catch(function(error) {
+
+
+   chartGroup.append("g")
+   .selectAll('text')
+   .data(stateData)
+   .enter()
+   .append("text")
+   .text(d=>d.abbr)
+   .attr("x",d=>xScale(d.age))
+   .attr("y",d=>yScale(d.smokes))
+   .classed(".stateText", true)
+   .attr("font-family", "Arial")
+   .attr("text-anchor", "middle")
+   .attr("fill", "white")
+   .attr("font-size", "10px")
+   .style("font-weight", "bold")
+   .attr("alignment-baseline", "central");
+
+
+   chartGroup.append("text")
+   .attr("transform", `translate(${chartWidth / 2}, ${chartHeight + chartMargin.top + 13})`)
+   .attr("text-anchor", "middle")
+   .attr("font-size", "16px")
+   .attr("fill", "black")
+   .style("font-weight", "bold")
+   .text("Median Age");
+
+   chartGroup.append("text")
+   .attr("y", 0 - ((chartMargin.left / 2) + 2))
+   .attr("x", 0 - (chartHeight / 2))
+   .attr("text-anchor", "middle")
+   .attr("font-size", "16px")
+   .attr("fill", "black")
+   .style("font-weight", "bold")
+   .attr("transform", "rotate(-90)")
+   .text("Smokers (%)");
+    }).catch(function(error) {
     console.log(error);
 });
-  
