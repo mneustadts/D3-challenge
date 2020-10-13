@@ -30,7 +30,7 @@ var chartGroup = svg.append("g")
 d3.csv("assets/data/data.csv").then(function(stateData) {
     console.log(stateData);
 
-// Cast th age value to a number for each piece of stateData
+// Cast the age value to a number for each piece of stateData
     stateData.forEach(function(data){
         data.age = +data.age;
     })
@@ -57,9 +57,8 @@ chartGroup.append("g")
 chartGroup.append("g")
   .call(yAxis);
 
- // Add dots
- svg.append('g')
- .selectAll("#scatter")
+ // Add plots
+ chartGroup.selectAll("#scatter")
  .data(stateData)
  .enter()
  .append("circle")
